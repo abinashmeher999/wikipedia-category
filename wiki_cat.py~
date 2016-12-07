@@ -21,11 +21,10 @@ class WikiCatQuery(object):
     def __res_cat_list(self, res):
         return res['query']['pages'][str(self.payload['pageids'])]['categories']
 
-    def get_cat(self, pageid=None,include_hidden=False):
+    def get_cat(self, pageid=None):
         if pageid is None:
             return []
-        if include_hidden==True:
-            self.payload['clshow']='hidden'
+
         self.payload['pageids'] = pageid
         res = requests.get(self.base_url, params=self.payload).json()
 
@@ -40,8 +39,7 @@ class WikiCatQuery(object):
 
 if __name__ == "__main__":
     from pprint import pprint
-    print("Do you want to include hidden categories? Enter True or False!!")
-    val=input()
+
     wk = WikiCatQuery()
-    pprint(wk.get_cat(843158,input))
-    pprint(wk.get_cat(20715044,input))
+    pprint(wk.get_cat(843158))
+    pprint(wk.get_cat(20715044))
