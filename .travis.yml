@@ -16,6 +16,6 @@ before_install:
   - sudo pip3 install -U virtualenvwrapper
   - python3 -V
   - pip3 -V
-install: "pip install -r requirements.txt"
+install: "sudo pip install -r requirements.txt"
 
-script: sample/core.py
+script: sudo python sample/core.py
