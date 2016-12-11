@@ -8,7 +8,7 @@ import json
 
 class WikiPage:
     def __init__(self, **reference_to_pages):
-        with open(os.path.join(os.path.dirname(__file__), 'metadata.json')) as data_file:
+        with open(os.path.join(os.path.dirname(__file__), '../data/metadata.json')) as data_file:
             self.metadata = json.load(data_file)
 
         self.base_url = "https://en.wikipedia.org/w/api.php"
