@@ -5,11 +5,12 @@ import re
 import sys
 import json
 
+with open(os.path.join(os.path.dirname(__file__), '../data/metadata.json')) as data_file:
+    metadata = json.load(data_file)
+
 
 class WikiPage:
     def __init__(self, **reference_to_pages):
-        with open(os.path.join(os.path.dirname(__file__), '../data/metadata.json')) as data_file:
-            self.metadata = json.load(data_file)
 
         self.base_url = "https://en.wikipedia.org/w/api.php"
 
@@ -18,7 +19,7 @@ class WikiPage:
             'format': 'json',
         }
         self.headers = {
-            'User-Agent': self.metadata["name"] + ' (' + self.metadata["website"] + ')'
+            'User-Agent': metadata["name"] + ' (' + metadata["website"] + ')'
         }
 
         self._parse_kwargs(**reference_to_pages)
