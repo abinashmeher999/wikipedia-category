@@ -4,7 +4,7 @@ import re
 import sys
 import json
 
-with open('metadata.json') as data_file:
+with open('../metadata.json') as data_file:
     data = json.load(data_file)
 
 class WikiPage:
