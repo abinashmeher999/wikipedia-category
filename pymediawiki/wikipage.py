@@ -1,14 +1,17 @@
+import os
 import requests
 from pprint import pprint
 import re
 import sys
 import json
 
-with open('metadata.json') as data_file:
-    data = json.load(data_file)
+with open(os.path.join(os.path.dirname(__file__), '../data/metadata.json')) as data_file:
+    metadata = json.load(data_file)
+
 
 class WikiPage:
     def __init__(self, **reference_to_pages):
+
         self.base_url = "https://en.wikipedia.org/w/api.php"
 
         self.payload = {
@@ -16,7 +19,7 @@ class WikiPage:
             'format': 'json',
         }
         self.headers = {
-                'User-Agent': data["name"] + ' (' + data["website"] + ')'
+            'User-Agent': metadata["name"] + ' (' + metadata["website"] + ')'
         }
 
         self._parse_kwargs(**reference_to_pages)
@@ -38,7 +41,6 @@ class WikiPage:
         self.payload['clcontinue'] = None
         self.payload['prop'] = None
         return cat_list
-
 
     # Method to fetch images
     def get_images(self, imlimit='max', imdir='ascending'):
@@ -67,12 +69,12 @@ class WikiPage:
         self.payload['lhlimit'] = lhlimit
 
         lh_list = {}
-        res = requests.get(self.base_url, params=self.payload,headers=self.headers).json()
+        res = requests.get(self.base_url, params=self.payload, headers=self.headers).json()
 
         lh_list = _strip_JSON(res, prop, '_nothing-to-strip_')
         while 'continue' in res:
             self.payload['lhcontinue'] = res['continue']['lhcontinue']
-            res = requests.get(self.base_url, params=self.payload,headers=self.headers).json()
+            res = requests.get(self.base_url, params=self.payload, headers=self.headers).json()
             _append_results(lh_list, res, prop, '_nothing-to-strip_')
 
         self.payload['lhcontinue'] = None
@@ -91,7 +93,8 @@ class WikiPage:
 
 
 def _strip_prop(text, prop):
-    return re.sub(prop+':', "", text, count=1)
+    return re.sub(prop + ':', "", text, count=1)
+
 
 def _strip_JSON(res, prop, strip_chars):
     ret = {}
@@ -101,6 +104,7 @@ def _strip_JSON(res, prop, strip_chars):
         ret[page_id] = [_strip_prop(entry['title'], strip_chars) for entry in page_content[prop]]
     return ret
 
+
 def _append_results(currlist, newlist, prop, strip_chars):
     ret = {}
     ret = _strip_JSON(newlist, prop, strip_chars)
@@ -109,13 +113,14 @@ def _append_results(currlist, newlist, prop, strip_chars):
             currlist[key] = []
         currlist[key] += ret[key]
 
+
 if __name__ == "__main__":
     titles = ['pantera', 'opeth']
 
     try:
         wk = WikiPage(titles=titles)
     except ValueError as error:
-        print (error.args)
+        print(error.args)
         sys.exit("Exited!")
 
     pprint(wk.get_categories())

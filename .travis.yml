@@ -15,6 +15,6 @@ install:
   - pip install -r requirements.txt
 # command to run tests
 script:
-  - python sample/core.py
+  - python setup.py develop && python tests/test.py
 notifications:
   email: false
