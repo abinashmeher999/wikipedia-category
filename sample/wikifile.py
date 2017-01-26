@@ -62,6 +62,7 @@ class WikiFile:
     def get_fileusage(self, fuprop="pageid|title|redirect", fulimit="max", funamespace="*", fushow="!redirect"):
         prop = 'fileusage'
         self.payload['prop'] = prop
+        self.payload['fuprop'] = fuprop
         self.payload['fulimit'] = fulimit
         self.payload['fushow'] = fushow
         self.payload['funamespace'] = funamespace
