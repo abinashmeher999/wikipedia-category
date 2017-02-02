@@ -28,7 +28,7 @@ class WikiPage:
         self.payload['clshow'] = 'hidden' if get_hidden else '!hidden'
         self.payload['prop'] = prop
 
-        cat_list = helpers._fetch_results(self.base_url, self.payload, self.headers, prop, 'Category', 'title')
+        cat_list = helpers._fetch_dict_results(self.base_url, self.payload, self.headers, prop)
 
         self.payload.pop('clcontinue', None)
         self.payload.pop('clshow', None)
@@ -42,7 +42,7 @@ class WikiPage:
         self.payload['imlimit'] = imlimit,
         self.payload['imdir'] = imdir
 
-        im_list = helpers._fetch_results(self.base_url, self.payload, self.headers, prop, 'File', 'title')
+        im_list = helpers._fetch_dict_results(self.base_url, self.payload, self.headers, prop)
 
         self.payload.pop('imcontinue', None)
         self.payload.pop('imlimit', None)
@@ -57,7 +57,7 @@ class WikiPage:
         self.payload['lhprop'] = lhprop
         self.payload['lhlimit'] = lhlimit
 
-        lh_list = helpers._fetch_results(self.base_url, self.payload, self.headers, prop, '_nothing-to-strip_', 'title')
+        lh_list = helpers._fetch_dict_results(self.base_url, self.payload, self.headers, prop)
 
         self.payload.pop('lhcontinue', None)
         self.payload.pop('lhprop', None)
@@ -71,7 +71,7 @@ class WikiPage:
         self.payload['prop'] = prop
         self.payload['pclimit'] = pclimit
 
-        pc_list = helpers._fetch_results(self.base_url, self.payload, self.headers, prop, '_nothing-to-strip_', 'name')
+        pc_list = helpers._fetch_dict_results(self.base_url, self.payload, self.headers, prop)
 
         self.payload.pop('pccontinue', None)
         self.payload.pop('pclimit', None)
@@ -85,7 +85,7 @@ class WikiPage:
         self.payload['pllimit'] = pllimit
         self.payload['pldir'] = pldir
 
-        pl_list = helpers._fetch_results(self.base_url, self.payload, self.headers, prop, '_nothing-to-strip_', 'title')
+        pl_list = helpers._fetch_dict_results(self.base_url, self.payload, self.headers, prop)
 
         self.payload.pop('plcontinue', None)
         self.payload.pop('pllimit', None)
@@ -100,7 +100,7 @@ class WikiPage:
         self.payload['rdlimit'] = rdlimit
         self.payload['rdprop'] = rdprop
 
-        rd_list = helpers._fetch_results(self.base_url, self.payload, self.headers, prop, '_nothing-to-strip_', 'title')
+        rd_list = helpers._fetch_dict_results(self.base_url, self.payload, self.headers, prop)
 
         self.payload.pop('rdcontinue', None)
         self.payload.pop('rdlimit', None)
